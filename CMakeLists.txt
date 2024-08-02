@@ -65,3 +65,17 @@ set_target_properties(sqlite-vss-static PROPERTIES OUTPUT_NAME "sqlite_vss0")
 target_compile_definitions(sqlite-vss-static PRIVATE SQLITE_CORE)
 
 
+# ================================== Custom Targets ================================== #
+add_custom_target(loadable
+    DEPENDS sqlite-vss sqlite-vector
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${PROJECT_SOURCE_DIR}/dist/debug
+    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:sqlite-vss> ${PROJECT_SOURCE_DIR}/dist/debug/
+    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:sqlite-vector> ${PROJECT_SOURCE_DIR}/dist/debug/
+)
+
+add_custom_target(loadable-release
+    DEPENDS sqlite-vss sqlite-vector
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${PROJECT_SOURCE_DIR}/dist/release
+    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:sqlite-vss> ${PROJECT_SOURCE_DIR}/dist/release/
+    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:sqlite-vector> ${PROJECT_SOURCE_DIR}/dist/release/
+)
